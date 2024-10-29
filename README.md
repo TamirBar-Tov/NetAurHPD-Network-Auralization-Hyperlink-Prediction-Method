@@ -31,8 +31,8 @@ This module is responsible for training the M5 model and evaluating its performa
 ### config
 The `config` module contains various configurations and hyperparameters used throughout the project.
 
-### [utils (including Negative Sampling)](http://localhost:8888/edit/Examples/utils.py)
+### [utils (including Negative Sampling)](https://github.com/TamirBar-Tov/NetAurHPD-Network-Auralization-Hyperlink-Prediction-Method/blob/master/Examples/utils.py)
 The utilities module includes the `negative_sampling` function, which generates negative hyperlinks to enhance the training dataset.
 ## Code Example
-- [Enron dataset](http://localhost:8888/notebooks/Examples/Enron/Enron%20dataset.ipynb)
+- [Enron dataset](https://github.com/TamirBar-Tov/NetAurHPD-Network-Auralization-Hyperlink-Prediction-Method/tree/master/Examples/Enron)
 
