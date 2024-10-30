@@ -8,20 +8,20 @@ Originaly NetAurHPD developed as a framework that relies on (1) graph auralizati
 In this repository we present NetAurHPD results on common hyperlink predictions tasks as demonstrated in [A Survey on Hyperlink Prediction](https://scholar.harvard.edu/sites/scholar.harvard.edu/files/canc/files/2207.02911.pdf)
 
 ## Components
-### [Data preprocess](http://localhost:8888/edit/Examples/data_preprocess.py)
+### [Data preprocess](https://github.com/TamirBar-Tov/NetAurHPD-Network-Auralization-Hyperlink-Prediction-Method/blob/master/Examples/data_preprocess.py)
 The `data_preprocess` and `create_train_and_test_sets` functions load and transform data into suitable training and test sets for model training.
-### [Network auralization](http://localhost:8888/edit/NetAurHPD/network_auralization.py)
+### [Network auralization](https://github.com/TamirBar-Tov/NetAurHPD-Network-Auralization-Hyperlink-Prediction-Method/blob/master/NetAurHPD/network_auralization.py)
 The `SignalPropagation` class implements the Network Auralization method to learn the underlying graph structure.
 
-### [Hyperlinks waveforms](http://localhost:8888/edit/NetAurHPD/hyperlinks_waveforms.py)
+### [Hyperlinks waveforms](https://github.com/TamirBar-Tov/NetAurHPD-Network-Auralization-Hyperlink-Prediction-Method/blob/master/NetAurHPD/hyperlinks_waveforms.py)
 The component averages node signals into hyperlink waveforms for further analysis.
-### [M5](http://localhost:8888/edit/NetAurHPD/M5.py)
+### [M5](https://github.com/TamirBar-Tov/NetAurHPD-Network-Auralization-Hyperlink-Prediction-Method/blob/master/NetAurHPD/M5.py)
 The M5 architecture is a very deep convolutional neural network designed for sound tasks. In this case, it is structured for binary classification tasks.
 
-### [Predict by M5](http://localhost:8888/edit/NetAurHPD/predict_by_M5.py)
+### [Predict by M5](https://github.com/TamirBar-Tov/NetAurHPD-Network-Auralization-Hyperlink-Prediction-Method/blob/master/NetAurHPD/predict_by_M5.py)
 This module is responsible for training the M5 model and evaluating its performance on the dataset.
 
-### [Config](http://localhost:8888/edit/NetAurHPD/config.py)
+### [Config](https://github.com/TamirBar-Tov/NetAurHPD-Network-Auralization-Hyperlink-Prediction-Method/blob/master/NetAurHPD/config.py)
 The `config` module contains various configurations and hyperparameters used throughout the project.
 
 ### [Utils (including Negative Sampling)](https://github.com/TamirBar-Tov/NetAurHPD-Network-Auralization-Hyperlink-Prediction-Method/blob/master/Examples/utils.py)
