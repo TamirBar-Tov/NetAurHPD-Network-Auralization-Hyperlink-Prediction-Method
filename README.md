@@ -5,6 +5,8 @@ This repository contains the code for NetAurHPD model based on the paper "Networ
 
 Originaly NetAurHPD developed as a framework that relies on (1) graph auralization to extract and aggregate representations of nodes in metabolite correlation networks and (2) data augmentation method that generates metabolite correlation networks given a subset of chemical reactions defined as hyperlinks. Network Auralization is an innovative application of sound recognition neural networks to predict centrality measures of nodes within a network, by learning from the ”sound” emitted by network nodes. Networks can be likened to resonating chambers, where sound propagates through nodes and links, generating a waveform-based representation for every node. The core process of network auralization involves the propagation of energy among nodes to their neighbors until the total energy is evenly distributed throughout the entire network. In NetAurHPD we average hyperlinks waveforms to represent a hyperlink throgh a signal. Based on these hyperlinks waveforms we train M5 (very deep convolutional neural network) as classification model.
 
+![NetAurHPD_pipeline](https://github.com/TamirBar-Tov/NetAurHPD-Network-Auralization-Hyperlink-Prediction-Method/blob/master/NetAurHPD/NetAurHPD_pipeline.png)
+
 In this repository we present NetAurHPD results on common hyperlink predictions tasks as demonstrated in [A Survey on Hyperlink Prediction](https://scholar.harvard.edu/sites/scholar.harvard.edu/files/canc/files/2207.02911.pdf)
 
 ## Components
