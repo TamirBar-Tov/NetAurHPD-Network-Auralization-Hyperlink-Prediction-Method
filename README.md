@@ -33,4 +33,4 @@ The utilities module includes the `negative_sampling` function, which generates 
 - [NDC dataset](https://github.com/TamirBar-Tov/NetAurHPD-Network-Auralization-Hyperlink-Prediction-Method/tree/master/Examples/NDC)
 
 ## Prerequisites
-
+The code was implemented in python 3.9. All requirements are included in the [requirements.txt](https://github.com/TamirBar-Tov/NetAurHPD-Network-Auralization-Hyperlink-Prediction-Method/blob/master/NetAurHPD/requirments.txt) file.
