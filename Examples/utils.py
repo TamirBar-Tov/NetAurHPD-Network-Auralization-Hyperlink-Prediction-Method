@@ -6,32 +6,40 @@ import matplotlib.pyplot as plt
 from NetAurHPD.config import parse
 config = parse()
 
-def clique_expansion_transformation(unique_hyperlink_dict, show=True):
+def clique_expansion_transformation(train_positive_hyperlink_dict,nodes, show=True):
     """
     Transforms a hypergraph into a graph using clique expansion, where each hyperlink is expanded into a fully connected subgraph.
 
     Args:
-        unique_hyperlink_dict (dict): Dictionary representing the hypergraph structure, where each key is a unique hyperlink index, and each value is a list of nodes in that hyperlink.
+        train_positive_hyperlink_dict (dict): Dictionary representing the hypergraph structure, where each key is a positive hyperlink index in the train set, and each value is a list of nodes in that hyperlink.
+        nodes (list): list of all nodes
         show (bool, optional): Whether to visualize the graph. Defaults to True.
-
+        
     Returns:
         networkx.Graph: A NetworkX graph object where each hyperlink is transformed into a clique of nodes.
 
     Visualization:
         If `show` is True, displays a visual representation of the graph using Matplotlib.
     """
-    # Create an empty graph
-    G = nx.Graph()
+    
+    train_positive_hyperedge_dict_for_G = {}
+    for k,h in train_positive_hyperlink_dict.items():
+        train_positive_hyperedge_dict_for_G[len(train_positive_hyperedge_dict_for_G)] = train_positive_hyperlink_dict[k]['nodes']
+        # Create an empty graph
+        G = nx.Graph()
 
-    for key, value in unique_hyperlink_dict.items():
+    for key, value in train_positive_hyperedge_dict_for_G.items():
         simplex_nodes = value
         G.add_nodes_from(simplex_nodes)
         G.add_edges_from(combinations(simplex_nodes, 2))
-
+    
+    # we add all nodes to G, even those without connections
+    G.add_nodes_from([x for x in nodes if x not in G.nodes()])
+    
     # Print nodes and edges of the graph
     print("Nodes:", len(G.nodes()))
     print("Edges:", G.size())
-    print("HyperLinks:", len(unique_hyperlink_dict))
+    print("HyperLinks:", len(train_positive_hyperedge_dict_for_G))
 
     if show:
         # Visualize the graph (optional)
@@ -40,12 +48,12 @@ def clique_expansion_transformation(unique_hyperlink_dict, show=True):
         plt.show()
     return G
 
-def negative_sampling(G, hyperlink_dict, alpha = config.alpha):
+def negative_sampling(nodes, hyperlink_dict, alpha = config.alpha):
     """
     Generates negative samples for hyperlinks, by replacing a subset of nodes with randomly selected nodes from the graph. For further explanation aboute the negative sampling method please refer to "A Survey on Hyperlink Prediction"
 
     Args:
-        G (networkx.Graph): The graph from which to sample negative nodes.
+        nodes (list): list of all nodes.
         hyperlink_dict (dict): Dictionary of original hyperlinks, where each key is a unique identifier, and each value is a list of nodes in the hyperlink.
         alpha (float, optional): Proportion of genuine nodes to retain in the negative samples.
     
@@ -59,7 +67,7 @@ def negative_sampling(G, hyperlink_dict, alpha = config.alpha):
     for k, h in hyperlink_dict.items():
         genuineness_nodes_num = round(len(h) * alpha)
         genuineness_nodes = random.sample(h, genuineness_nodes_num)
-        remaining_nodes_in_v = G.nodes() - h
+        remaining_nodes_in_v = [x for x in nodes if x not in h]  
         additional_nodes = random.sample(remaining_nodes_in_v, len(h) - genuineness_nodes_num)
         f = additional_nodes+genuineness_nodes
         negative_hyperlink_dict[k] = {'label': 'negative', 'nodes':f}

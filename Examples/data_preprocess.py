@@ -79,11 +79,21 @@ def data_preprocess(nodes_data_dir, groups_size_data_dir):
         groups_size_data_dir (str): The file path to the directory containing hyperlink sizes data.
 
     Returns:
-        dict: A dictionary representing the unique hypergraph structure where each key is a unique index, and each value is a list of nodes in that hyperlink group.
+        dict: A dictionary representing the unique hypergraph structure where each key is a unique index, and each value is a list of nodes in that hyperlink group
+        nodes: list of all nodes.
     """
     hyperlinks_nodes_list, hyperlinks_size_list = load_data(nodes_data_dir, groups_size_data_dir)
     unique_hyperlink_dict = transform_data_into_hypergraph(hyperlinks_nodes_list, hyperlinks_size_list)
-    return unique_hyperlink_dict
+    
+    # create list of all nodes
+    nodes = []
+    for k,h in unique_hyperlink_dict.items():
+        for node in h:
+            nodes.append(node)
+
+    nodes = list(set(nodes))
+    
+    return unique_hyperlink_dict, nodes
 
 def create_train_and_test_sets(positive_hyperlink_dict, negative_hyperlink_dict):
     """
@@ -122,6 +132,6 @@ def create_train_and_test_sets(positive_hyperlink_dict, negative_hyperlink_dict)
     y_test = create_y(test_hyperlink_dict)
     y_train_tensor = torch.tensor(y_train, dtype=torch.float)
     y_test_tensor = torch.tensor(y_test, dtype=torch.float)
-    return train_hyperlink_dict, y_train_tensor, test_hyperlink_dict, y_test_tensor
+    return train_positive_hyperlink_dict, train_hyperlink_dict, y_train_tensor, test_hyperlink_dict, y_test_tensor
 
 
