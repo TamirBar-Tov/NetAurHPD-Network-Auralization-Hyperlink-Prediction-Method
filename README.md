@@ -11,24 +11,24 @@ In this repository we present NetAurHPD results on common hyperlink predictions 
 
 ## Usage
 ### Method
-Performing prediction using NetAurHPD required two steps:
-1. Run network auraliztion to find wave form to each node.
+Performing prediction using NetAurHPD requires two steps:
+1. Run network auralization to find wave form to each node.
 2. Average the waveforms to represent hyperlinks
 3. Train M5 as classifier.
 
 ### Configurations
 Deafult configurations in [confog](https://github.com/TamirBar-Tov/NetAurHPD-Network-Auralization-Hyperlink-Prediction-Method/blob/master/NetAurHPD/config.py) file:
-1. alpha = 0.5 , Proportion of genuine nodes to retain in the negative samples.
-2. beta = 1 , ration between positiva and negative samples.
-3. l = 10,000 , waveform length.
-4. train_size = 0.6
-5. stride = 8 , sliding window step in M5.
-6. n_channel = 32 , Number of output channels for the M5 layer. 
-7. epochs = 50 , training iterations.
-8. lr = 0.01 , learning rate.
+1. **alpha** = 0.5 , Proportion of genuine nodes to retain in the negative samples.
+2. **beta** = 1 , ration between positiva and negative samples.
+3. **l** = 10,000 , waveform length.
+4. **train_size** = 0.6
+5. **stride** = 8 , sliding window step in M5.
+6. **n_channel** = 32 , Number of output channels for the M5 layer. 
+7. **epochs** = 50 , training iterations.
+8. **lr** = 0.01 , learning rate.
 
 ### Data Structure
-each sample shpuld be in the sape of: `ID: {'label': 'positive', 'nodes': [1, 2]}`
+Each sample should be in the shape of: `ID: {'label': 'positive', 'nodes': [1, 2]}`
 
 For example:
 ```python
@@ -40,13 +40,14 @@ For example:
 ### Prediction
 Example showing how to perform prediction using NetAurHPD:
 ```python
-# required dictionaries: 
-# train_positive_hyperlink_dict
-# train_hyperlink_dict
-# test_hyperlink_dict
-# y_train (tensor)
-# y_test (tensor)
-# nodes list
+""" required dictionaries: 
+        train_positive_hyperlink_dict
+        train_hyperlink_dict
+        test_hyperlink_dict
+        y_train (tensor)
+        y_test (tensor)
+        nodes list
+"""
 
 instrument = SignalPropagation(momentum=0.999, response_len=10000, tqdm=lambda x: x, device) 
 train_hyperlinks_waveforms, test_hyperlinks_waveforms = instrument.networkx_auralization(train_positive_hyperlink_dict,train_hyperlink_dict,test_hyperlink_dict,nodes,how_graph=True)
@@ -74,7 +75,7 @@ The M5 architecture is a very deep convolutional neural network designed for sou
 ### [Config](https://github.com/TamirBar-Tov/NetAurHPD-Network-Auralization-Hyperlink-Prediction-Method/blob/master/NetAurHPD/config.py)
 The `config` module contains various configurations and hyperparameters used throughout the project.
 
-### [Utils (including Negative Sampling)](https://github.com/TamirBar-Tov/NetAurHPD-Network-Auralization-Hyperlink-Prediction-Method/blob/master/Examples/utils.py)
+### [utils (including Negative Sampling)](https://github.com/TamirBar-Tov/NetAurHPD-Network-Auralization-Hyperlink-Prediction-Method/blob/master/Examples/utils.py)
 The utilities module includes the `negative_sampling` function, which generates negative hyperlinks to enhance the training dataset.
 
 
