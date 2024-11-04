@@ -111,6 +111,7 @@ def predict(hyperlinks_train, y_train_tensor, hyperlinks_test, y_test_tensor, lr
     # max accuracy scores
     print("Max train accuracy:", max(train_accuracy_list))
     print("Max test accuracy:", max(test_accuracy_list))
+    return y_pred_np_test
 
 
 

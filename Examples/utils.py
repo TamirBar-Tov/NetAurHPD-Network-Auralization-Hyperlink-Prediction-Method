@@ -6,47 +6,21 @@ import matplotlib.pyplot as plt
 from NetAurHPD.config import parse
 config = parse()
 
-def clique_expansion_transformation(train_positive_hyperlink_dict,nodes, show=True):
+
+def plot_results_two_lines(first_list, first_name, second_list, second_name, x_axis_name, y_axis_name, header,plot_name):
     """
-    Transforms a hypergraph into a graph using clique expansion, where each hyperlink is expanded into a fully connected subgraph.
-
-    Args:
-        train_positive_hyperlink_dict (dict): Dictionary representing the hypergraph structure, where each key is a positive hyperlink index in the train set, and each value is a list of nodes in that hyperlink.
-        nodes (list): list of all nodes
-        show (bool, optional): Whether to visualize the graph. Defaults to True.
-        
-    Returns:
-        networkx.Graph: A NetworkX graph object where each hyperlink is transformed into a clique of nodes.
-
-    Visualization:
-        If `show` is True, displays a visual representation of the graph using Matplotlib.
+    Plots two lines on a graph with specified labels and titles.
     """
-    
-    train_positive_hyperedge_dict_for_G = {}
-    for k,h in train_positive_hyperlink_dict.items():
-        train_positive_hyperedge_dict_for_G[len(train_positive_hyperedge_dict_for_G)] = train_positive_hyperlink_dict[k]['nodes']
-        # Create an empty graph
-        G = nx.Graph()
-
-    for key, value in train_positive_hyperedge_dict_for_G.items():
-        simplex_nodes = value
-        G.add_nodes_from(simplex_nodes)
-        G.add_edges_from(combinations(simplex_nodes, 2))
-    
-    # we add all nodes to G, even those without connections
-    G.add_nodes_from([x for x in nodes if x not in G.nodes()])
-    
-    # Print nodes and edges of the graph
-    print("Nodes:", len(G.nodes()))
-    print("Edges:", G.size())
-    print("HyperLinks:", len(train_positive_hyperedge_dict_for_G))
-
-    if show:
-        # Visualize the graph (optional)
-        plt.figure(figsize=(20, 20))
-        nx.draw_kamada_kawai(G, with_labels=True)
-        plt.show()
-    return G
+    first_x_axis = list(range(len(first_list)))
+    second_x_axis = list(range(len(second_list)))
+    plt.plot(first_x_axis, first_list, label=first_name, color= "green")
+    plt.plot(second_x_axis, second_list, label= second_name, color='gold')
+    plt.xlabel(x_axis_name)
+    plt.ylabel(y_axis_name)
+    plt.legend()
+    plt.title(header)
+    plt.show()
+    plt.clf()
 
 def negative_sampling(nodes, hyperlink_dict, alpha = config.alpha):
     """

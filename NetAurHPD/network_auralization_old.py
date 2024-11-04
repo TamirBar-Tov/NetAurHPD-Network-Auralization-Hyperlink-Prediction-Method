@@ -77,6 +77,7 @@ def network_auralization_from_graph(G, l=config.l):
     Adj = torch.tensor(Adj).to(device)
 
     # impulse response
-    signal = instrument(Adj)
+    signal = self(Adj)
+    
     return signal
 
