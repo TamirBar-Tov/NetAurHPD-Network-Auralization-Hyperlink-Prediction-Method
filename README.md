@@ -50,9 +50,16 @@ Example showing how to perform prediction using NetAurHPD:
 """
 
 instrument = SignalPropagation(momentum=0.999, response_len=10000, tqdm=lambda x: x, device) 
-train_hyperlinks_waveforms, test_hyperlinks_waveforms = instrument.networkx_auralization(train_positive_hyperlink_dict,train_hyperlink_dict,test_hyperlink_dict,nodes,how_graph=True)
-NetAurHPD_DL_architecture = NetAurHPD_M5(n_input=1, n_output=1, stride=config.stride, n_channel=config.n_channel)
-y_pred = NetAurHPD_DL_architecture.predict(train_hyperlinks_waveforms, y_train, test_hyperlinks_waveforms, y_test,lr=config.lr, total_iters = config.epochs)
+
+train_hyperlinks_waveforms, test_hyperlinks_waveforms = instrument.networkx_auralization(
+    train_positive_hyperlink_dict,train_hyperlink_dict,test_hyperlink_dict,nodes,how_graph=True)
+
+NetAurHPD_DL_architecture = NetAurHPD_M5(n_input=1, n_output=1, stride=config.stride,
+                                         n_channel=config.n_channel)
+                                         
+y_pred = NetAurHPD_DL_architecture.predict(train_hyperlinks_waveforms, y_train, 
+                                        test_hyperlinks_waveforms, y_test,lr=config.lr,
+                                        total_iters = config.epochs)
 
 ```
 ### Code Examples
