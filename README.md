@@ -11,7 +11,7 @@ In this repository we present NetAurHPD results on common hyperlink predictions 
 
 ## Usage
 ### Method
-Performing prediction using NetAurHPD requires two steps:
+Performing prediction using NetAurHPD requires three steps:
 1. Run network auralization to find wave form to each node.
 2. Average the waveforms to represent hyperlinks
 3. Train M5 as classifier.
