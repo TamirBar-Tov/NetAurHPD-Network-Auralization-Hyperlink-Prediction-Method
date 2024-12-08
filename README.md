@@ -3,7 +3,7 @@
 ## Overview
 This repository contains the code for NetAurHPD model based on the paper "Network Auralization Hyperlink Prediction Model to Identify Metabolic Pathways from Metabolomics Data" by Tamir Bar-Tov, [Rami Puzis](https://scholar.google.com/citations?user=SfJ_pOYAAAAJ&hl=iw&oi=sra) and [David Toubiana](https://scholar.google.com/citations?user=-l5S-ScAAAAJ&hl=iw&oi=sra). [Link to the paper](https://arxiv.org/pdf/2410.22030)
 
-Originaly NetAurHPD developed as a framework that relies on (1) graph auralization to extract and aggregate representations of nodes in metabolite correlation networks and (2) data augmentation method that generates metabolite correlation networks given a subset of chemical reactions defined as hyperlinks. Network Auralization is an innovative application of sound recognition neural networks to predict centrality measures of nodes within a network, by learning from the ”sound” emitted by network nodes. Networks can be likened to resonating chambers, where sound propagates through nodes and links, generating a waveform-based representation for every node. The core process of network auralization involves the propagation of energy among nodes to their neighbors until the total energy is evenly distributed throughout the entire network. In NetAurHPD we average hyperlinks waveforms to represent a hyperlink throgh a signal. Based on these hyperlinks waveforms we train M5 (very deep convolutional neural network) as classification model.
+Originaly NetAurHPD developed as a framework that relies on (1) graph auralization to extract and aggregate representations of nodes in metabolite correlation networks and (2) data augmentation method that generates metabolite correlation networks given a subset of chemical reactions defined as hyperlinks. Network Auralization is an innovative application of sound recognition neural networks to predict centrality measures of nodes within a network, by learning from the ”sound” emitted by network nodes. Networks can be likened to resonating chambers, where sound propagates through nodes and links, generating a waveform-based representation for every node. The core process of network auralization involves the propagation of energy among nodes to their neighbors until the total energy is evenly distributed throughout the entire network. In NetAurHPD we average hyperlinks waveforms to represent a hyperlink throgh a signal. Based on these hyperlinks waveforms we train M5 (very deep convolutional neural network) as classification model. To optimize the classification the threshold is determined using Youden's J Statistic.
 
 ![NetAurHPD_pipeline](https://github.com/TamirBar-Tov/NetAurHPD-Network-Auralization-Hyperlink-Prediction-Method/blob/master/NetAurHPD/NetAurHPD_pipeline.png)
 
@@ -15,6 +15,7 @@ Performing prediction using NetAurHPD requires three steps:
 1. Run network auralization to find wave form to each node.
 2. Average the waveforms to represent hyperlinks
 3. Train M5 as classifier.
+4. Optimize classification threshold and calculate score metrics.
 
 ### Configurations
 Deafult configurations in [confog](https://github.com/TamirBar-Tov/NetAurHPD-Network-Auralization-Hyperlink-Prediction-Method/blob/master/NetAurHPD/config.py) file:
@@ -24,7 +25,7 @@ Deafult configurations in [confog](https://github.com/TamirBar-Tov/NetAurHPD-Net
 4. **train_size** = 0.6
 5. **stride** = 8 , sliding window step in M5.
 6. **n_channel** = 32 , Number of output channels for the M5 layer. 
-7. **epochs** = 50 , training iterations.
+7. **epochs** = 40 , training iterations.
 8. **lr** = 0.01 , learning rate.
 
 ### Data Structure
@@ -60,6 +61,8 @@ NetAurHPD_DL_architecture = NetAurHPD_M5(n_input=1, n_output=1, stride=config.st
 y_pred = NetAurHPD_DL_architecture.predict(train_hyperlinks_waveforms, y_train, 
                                         test_hyperlinks_waveforms, y_test,lr=config.lr,
                                         total_iters = config.epochs)
+                                     
+optimize_results_and_calc_metrics(y_test, y_pred)
 
 ```
 ### Code Examples
@@ -79,11 +82,15 @@ The component averages node signals into hyperlink waveforms for further analysi
 ### [NetAurHPD_M5](https://github.com/TamirBar-Tov/NetAurHPD-Network-Auralization-Hyperlink-Prediction-Method/blob/master/NetAurHPD/NetAurHPD_M5.py)
 The M5 architecture is a very deep convolutional neural network designed for sound tasks. In this case, it is structured for binary classification tasks. This module is also responsible for training the M5 model and evaluating its performance on the dataset.
 
+### [Result optimization and analysis](https://github.com/TamirBar-Tov/NetAurHPD-Network-Auralization-Hyperlink-Prediction-Method/blob/master/NetAurHPD/result_optimization_and_analysis.py)
+Optimizes the threshold using Youden's J Statistic and calculates several evaluation metrics: AUC, accuracy, recall, precision, F1 score And fpr.
+
 ### [Config](https://github.com/TamirBar-Tov/NetAurHPD-Network-Auralization-Hyperlink-Prediction-Method/blob/master/NetAurHPD/config.py)
 The `config` module contains various configurations and hyperparameters used throughout the project.
 
 ### [utils (including Negative Sampling)](https://github.com/TamirBar-Tov/NetAurHPD-Network-Auralization-Hyperlink-Prediction-Method/blob/master/Examples/utils.py)
 The utilities module includes the `negative_sampling` function, which generates negative hyperlinks to enhance the training dataset.
+
 
 
 ## Prerequisites
